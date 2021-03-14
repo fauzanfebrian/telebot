@@ -3,7 +3,7 @@ const axios = require("axios");
 (async () => {})();
 module.exports.Downloader = async (url) => {
   const value = await instagram_download.downloadMetaData(url);
-  axios.get('url)
+  axios.get(url)
   .then((response) => {
     console.log("GET Response")
     console.log(response.data.graphql);
