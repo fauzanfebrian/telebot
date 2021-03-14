@@ -25,21 +25,20 @@ igBot.command("download", (ctx) => {
       downloadctx.reply("wait a few seconds...");
       let url = downloadctx.update.message.text,
         igContent = await Downloader(url);
-
       if (fs.existsSync(igContent.file)) {
         if (igContent.type == "Image") {
           return (
             downloadctx.replyWithPhoto({ source: igContent.file }),
             setTimeout(() => {
               fs.unlinkSync(igContent.file);
-            }, 60000)
+            }, 15000)
           );
         } else if (igContent.type == "Video") {
           return (
             downloadctx.replyWithVideo({ source: igContent.file }),
             setTimeout(() => {
               fs.unlinkSync(igContent.file);
-            }, 60000)
+            }, 15000)
           );
         }
       } else {
