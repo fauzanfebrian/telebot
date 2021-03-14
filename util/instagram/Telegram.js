@@ -27,7 +27,7 @@ igBot.command("download", (ctx) => {
       let userId = downloadctx.update.message.from.id;
       const values = await Download(url, userId);
       setTimeout(() => {
-        if (values.err) {
+        if (values.length == 0 || values.err) {
           return downloadctx.reply(
             `there's problem while downloading file,\nplease make sure the account is not private`
           );
