@@ -25,28 +25,27 @@ igBot.command("download", (ctx) => {
       downloadctx.reply("wait a few seconds...");
       let url = downloadctx.update.message.text;
       const igContent = await Downloader(url);
-      console.log(igContent);
-//       if (fs.existsSync(igContent.file)) {
-//         if (igContent.type == "Image") {
-//           return (
-//             downloadctx.replyWithPhoto({ source: igContent.file }),
-//             setTimeout(() => {
-//               fs.unlinkSync(igContent.file);
-//             }, 15000)
-//           );
-//         } else if (igContent.type == "Video") {
-//           return (
-//             downloadctx.replyWithVideo({ source: igContent.file }),
-//             setTimeout(() => {
-//               fs.unlinkSync(igContent.file);
-//             }, 15000)
-//           );
-//         }
-//       } else {
-//         return downloadctx.reply(
-//           "sorry there's some problem when uploading file"
-//         );
-//       }
+      if (fs.existsSync(igContent.file)) {
+        if (igContent.type == "Image") {
+          return (
+            downloadctx.replyWithPhoto({ source: igContent.file }),
+            setTimeout(() => {
+              fs.unlinkSync(igContent.file);
+            }, 15000)
+          );
+        } else if (igContent.type == "Video") {
+          return (
+            downloadctx.replyWithVideo({ source: igContent.file }),
+            setTimeout(() => {
+              fs.unlinkSync(igContent.file);
+            }, 15000)
+          );
+        }
+      } else {
+        return downloadctx.reply(
+          "sorry there's some problem when uploading file"
+        );
+      }
     }),
     ctx.reply("Paste instagram content's url here")
   );
