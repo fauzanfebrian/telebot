@@ -23,8 +23,8 @@ igBot.command("download", (ctx) => {
   return (
     igBot.hears(/(instagram)/gi, async (downloadctx) => {
       downloadctx.reply("wait a few seconds...");
-      let url = downloadctx.update.message.text,
-        igContent = await Downloader(url);
+      let url = downloadctx.update.message.text;
+      const igContent = await Downloader(url);
       if (fs.existsSync(igContent.file)) {
         if (igContent.type == "Image") {
           return (
