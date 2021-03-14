@@ -5,15 +5,16 @@ const bot = new Telegraf(botToken);
 const { Download, isValidUrl } = require("./Downloader");
 
 bot.start((ctx) =>
-  ctx.reply(`Welcome
-
-Type /help to know this bot's feature
-`)
+  ctx.reply(
+    `Welcome ${
+      ctx.update.message.from.first_name
+        ? ctx.update.message.from.first_name
+        : ctx.update.message.from.username
+    }\n\nType /help to know how to use this bot`
+  )
 );
 bot.help((ctx) =>
-  ctx.reply(`Want to ask other feature bot or report bug? to @fauzanFebriansyah
-
-type /download to download youtube video or just audio
+  ctx.reply(`Want to ask other feature bot or report bug? to @fauzanFebriansyah\n\ntype /download to download youtube video or just audio
 `)
 );
 let url, type;
@@ -42,7 +43,9 @@ bot.command("download", (ctx) => {
                     );
                   } else {
                     return (
-                      fileUpload.replyWithVideo({ source: filePath }),
+                      fileUpload.replyWithVideo({
+                        source: fs.createReadStream(filePath),
+                      }),
                       setTimeout(() => {
                         fs.unlinkSync(filePath);
                       }, 60000)
@@ -50,8 +53,7 @@ bot.command("download", (ctx) => {
                   }
                 }, 35000);
               } else {
-                return;
-                fileUpload.reply(
+                return fileUpload.reply(
                   `Sorry there's problem when uploading file and ${info}`
                 );
               }
@@ -60,8 +62,7 @@ bot.command("download", (ctx) => {
           urlSession.reply("Please write the type 'mp3 / mp4'")
         );
       } else {
-        return urlSession.reply(`The url is wrong
-        Paste Again!`);
+        return urlSession.reply(`The url is wrong\n\nPaste Again!`);
       }
     }),
     ctx.reply("Paste youtube's url here")
@@ -72,4 +73,4 @@ bot.command("download", (ctx) => {
 process.once("SIGINT", () => bot.stop("SIGINT"));
 process.once("SIGTERM", () => bot.stop("SIGTERM"));
 
-module.exports = { bot };
+module.exports = { ytBot: bot };
