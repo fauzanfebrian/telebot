@@ -25,6 +25,7 @@ igBot.command("download", (ctx) => {
       downloadctx.reply("wait a few seconds...");
       let url = downloadctx.update.message.text;
       const igContent = await Downloader(url);
+
       if (fs.existsSync(igContent.file)) {
         if (igContent.type == "Image") {
           return (
