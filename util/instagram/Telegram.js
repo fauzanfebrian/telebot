@@ -27,6 +27,11 @@ igBot.command("download", (ctx) => {
       let userId = downloadctx.update.message.from.id;
       const values = await Download(url, userId);
       setTimeout(() => {
+        if (values.err) {
+          return downloadctx.reply(
+            `there's problem while downloading file,\nplease make sure the account is not private`
+          );
+        }
         values.forEach((value) => {
           if (value.type === "Image")
             downloadctx.replyWithPhoto({ source: value.path });
@@ -37,7 +42,7 @@ igBot.command("download", (ctx) => {
         });
       }, 30000);
     }),
-    ctx.reply("Paste instagram content's url here")
+    ctx.reply("Paste instagram's content url here")
   );
 });
 
