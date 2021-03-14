@@ -1,6 +1,6 @@
 const instagram_download = require("@juliendu11/instagram-downloader");
 (async () => {})();
 module.exports.Downloader = async (url) => {
-  const value = await instagram_download.downloadMedia(url, "./results/insta");
+  const value = await instagram_download.downloadMedia("https://www.instagram.com/p/CMXMG8xlGdH/", "./results/insta");
   return value;
 };
