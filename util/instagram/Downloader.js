@@ -5,6 +5,7 @@ const fs = require("fs");
 module.exports.Download = async (url, userId) => {
   let result = await instagramGetUrl(url),
     filePath = await [];
+  console.log(result);
   if (result.err) return { err: true };
   result.url_list.forEach((url, index) => {
     const jpgPattern = new RegExp(/.jpg/gi);
