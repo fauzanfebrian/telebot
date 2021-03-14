@@ -1,5 +1,5 @@
 const { Telegraf } = require("telegraf");
-const { Downloader } = require("./Downloader");
+const { Download } = require("./Downloader");
 const fs = require("fs");
 
 const igBot = new Telegraf("1626474474:AAEU4AG7PbOBXMT2jSoiQbBpXC4QerIv1S4");
@@ -24,28 +24,18 @@ igBot.command("download", (ctx) => {
     igBot.hears(/(instagram)/gi, async (downloadctx) => {
       downloadctx.reply("wait a few seconds...");
       let url = downloadctx.update.message.text;
-      const igContent = await Downloader(url);
-      if (fs.existsSync(igContent.file)) {
-        if (igContent.type == "Image") {
-          return (
-            downloadctx.replyWithPhoto({ source: igContent.file }),
-            setTimeout(() => {
-              fs.unlinkSync(igContent.file);
-            }, 15000)
-          );
-        } else if (igContent.type == "Video") {
-          return (
-            downloadctx.replyWithVideo({ source: igContent.file }),
-            setTimeout(() => {
-              fs.unlinkSync(igContent.file);
-            }, 15000)
-          );
-        }
-      } else {
-        return downloadctx.reply(
-          "sorry there's some problem when uploading file"
-        );
-      }
+      let userId = downloadctx.update.message.from.id;
+      const values = await Download(url, userId);
+      setTimeout(() => {
+        values.forEach((value) => {
+          if (value.type === "Image")
+            downloadctx.replyWithPhoto({ source: value.path });
+          else downloadctx.replyWithVideo({ source: value.path });
+          setTimeout(() => {
+            fs.unlinkSync(value.path);
+          }, 10000);
+        });
+      }, 30000);
     }),
     ctx.reply("Paste instagram content's url here")
   );

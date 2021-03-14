@@ -1,21 +1,27 @@
-const instagram_download = require("@juliendu11/instagram-downloader");
-const axios = require("axios");
-(async () => {})();
-module.exports.Downloader = async (url) => {
-  let indexDestroy = [];
-  url = ("" + url).split("/");
-  url.forEach((str, index) => {
-    let condition = false;
-    const splitStr = [...str];
-    splitStr.forEach((splitStr) => {
-      if (splitStr === "?") condition = true;
-    });
-    if (condition) indexDestroy.push(index);
+const instagramGetUrl = require("instagram-url-direct");
+const https = require("https"); // or 'https' for https:// URLs
+const fs = require("fs");
+
+module.exports.Download = async (url, userId) => {
+  let result = await instagramGetUrl(url),
+    filePath = await [];
+
+  result.url_list.forEach((url, index) => {
+    const jpgPattern = new RegExp(/.jpg/gi);
+    const isJpg = jpgPattern.test(url);
+    let path;
+    if (isJpg) {
+      path = `./results/insta/${userId}${index}.jpg`;
+      https.get(url, (response) => {
+        response.pipe(fs.createWriteStream(path));
+      });
+    } else if (isJpg === false) {
+      path = `./results/insta/${userId}${index}.mp4`;
+      https.get(url, (response) => {
+        response.pipe(fs.createWriteStream(path));
+      });
+    }
+    filePath.push({ path, type: isJpg ? "Image" : "Vidio" });
   });
-  indexDestroy.forEach((index) => {
-    url.splice(index);
-  });
-  url = url.join("/");
-  const value = await instagram_download.downloadMedia(url, "./results/insta");
-  return value;
+  return filePath;
 };
