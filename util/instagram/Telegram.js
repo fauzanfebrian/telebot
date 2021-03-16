@@ -1,17 +1,19 @@
 const { Telegraf } = require("telegraf");
 const { Download } = require("./Downloader");
 const fs = require("fs");
-const https = require("https");
+const axios = require("axios");
 const igBot = new Telegraf("1626474474:AAEU4AG7PbOBXMT2jSoiQbBpXC4QerIv1S4");
 const isPrivate = (url) => {
   return new Promise((resolve, reject) => {
-    https
-      .get(url, (res) => {
-        console.log(res);
-        resolve(res.headers.location == undefined ? false : true);
+    axios
+      .get(url)
+      .then((result) => {
+        resolve(
+          result.request._redirectable._isRedirect == undefined ? false : true
+        );
       })
-      .on("error", (e) => {
-        reject(e);
+      .catch((err) => {
+        reject(err);
       });
   });
 };
