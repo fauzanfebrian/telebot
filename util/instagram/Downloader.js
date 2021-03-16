@@ -12,28 +12,14 @@ module.exports.Download = async (url, userId) => {
     let path;
     if (isJpg) {
       path = `./results/insta/${userId}${index}.jpg`;
-      https
-        .get(url, (response) => {
-          response.pipe(fs.createWriteStream(path));
-        })
-        .then((result) => {
-          resolve(result);
-        })
-        .catch((err) => {
-          reject(err);
-        });
+      https.get(url, (response) => {
+        response.pipe(fs.createWriteStream(path));
+      });
     } else if (isJpg === false) {
       path = `./results/insta/${userId}${index}.mp4`;
-      https
-        .get(url, (response) => {
-          response.pipe(fs.createWriteStream(path));
-        })
-        .then((result) => {
-          resolve(result);
-        })
-        .catch((err) => {
-          reject(err);
-        });
+      https.get(url, (response) => {
+        response.pipe(fs.createWriteStream(path));
+      });
     }
     filePath.push({ path, type: isJpg ? "Image" : "Vidio" });
   });
