@@ -7,6 +7,7 @@ const isPrivate = (url) => {
   return new Promise((resolve, reject) => {
     https
       .get(url, (res) => {
+        console.log(res.headers);
         resolve(res.headers.location == undefined ? false : true);
       })
       .on("error", (e) => {
