@@ -35,7 +35,7 @@ igBot.help((ctx) =>
 );
 igBot.command("download", (ctx) => {
   return (
-    igBot.hears(/(https:\/\/www.instagram.com\/p)/gi, async (downloadctx) => {
+    igBot.hears(/(https:\/\/www.instagram.com)/gi, async (downloadctx) => {
       downloadctx.reply("wait a few seconds...");
       let url = downloadctx.update.message.text;
       let userId = downloadctx.update.message.from.id;
