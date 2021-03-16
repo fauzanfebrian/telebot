@@ -3,21 +3,21 @@ const { Download } = require("./Downloader");
 const fs = require("fs");
 const axios = require("axios");
 const igBot = new Telegraf("1626474474:AAEU4AG7PbOBXMT2jSoiQbBpXC4QerIv1S4");
-const isPrivate = (url) => {
-  return new Promise((resolve, reject) => {
-    axios
-      .get(url)
-      .then((result) => {
-        console.log(result.request._redirectable);
-        resolve(
-          result.request._redirectable._isRedirect == undefined ? false : true
-        );
-      })
-      .catch((err) => {
-        reject(err);
-      });
-  });
-};
+// const isPrivate = (url) => {
+//   return new Promise((resolve, reject) => {
+//     axios
+//       .get(url)
+//       .then((result) => {
+//         console.log(result.request._redirectable);
+//         resolve(
+//           result.request._redirectable._isRedirect == undefined ? false : true
+//         );
+//       })
+//       .catch((err) => {
+//         reject(err);
+//       });
+//   });
+// };
 igBot.start((ctx) => {
   ctx.reply(
     `Welcome ${
@@ -40,11 +40,11 @@ igBot.command("download", (ctx) => {
       downloadctx.reply("wait a few seconds...");
       let url = downloadctx.update.message.text;
       let userId = downloadctx.update.message.from.id;
-      const private = await isPrivate(url);
-      if (private)
-        return downloadctx.reply(
-          "there's some problem\nmake sure the account is not private"
-        );
+      // const private = await isPrivate(url);
+      // if (private)
+      //   return downloadctx.reply(
+      //     "there's some problem\nmake sure the account is not private"
+      //   );
       const values = await Download(url, userId);
       setTimeout(() => {
         if (values.length == 0 || values.err) {
