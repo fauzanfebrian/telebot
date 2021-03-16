@@ -7,9 +7,7 @@ const isPrivate = (url) => {
   return new Promise((resolve, reject) => {
     https
       .get(url, (res) => {
-        https.get(res.headers.location, (res1) =>
-          console.log(res1.headers.location)
-        );
+        https.get(res.headers.location, (res1) => console.log(res1.headers));
         resolve(res.headers.location == undefined ? false : true);
       })
       .on("error", (e) => {
@@ -40,8 +38,6 @@ igBot.command("download", (ctx) => {
       let url = downloadctx.update.message.text;
       let userId = downloadctx.update.message.from.id;
       const private = await isPrivate(url);
-      console.log(url);
-      console.log("private :", private);
       if (private)
         return downloadctx.reply(
           "there's some problem\nmake sure the account is not private"
