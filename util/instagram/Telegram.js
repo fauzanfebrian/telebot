@@ -7,8 +7,10 @@ const isPrivate = (url) => {
   return new Promise((resolve, reject) => {
     https
       .get(url, (res) => {
-        https.get(res.headers.location, (res1) => console.log(res1.headers));
-        resolve(res.headers.location == undefined ? false : true);
+        setTimeout(() => {
+          console.log(res.headers.location);
+          resolve(res.headers.location == undefined ? false : true);
+        }, 5000);
       })
       .on("error", (e) => {
         reject(e);
