@@ -7,7 +7,9 @@ const isPrivate = (url) => {
   return new Promise((resolve, reject) => {
     https
       .get(url, (res) => {
-        console.log(res.headers);
+        https.get(res.headers.location, (res1) =>
+          console.log(res1.headers.location)
+        );
         resolve(res.headers.location == undefined ? false : true);
       })
       .on("error", (e) => {
@@ -15,7 +17,6 @@ const isPrivate = (url) => {
       });
   });
 };
-
 igBot.start((ctx) => {
   ctx.reply(
     `Welcome ${
