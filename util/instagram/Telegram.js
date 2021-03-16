@@ -38,6 +38,8 @@ igBot.command("download", (ctx) => {
       let url = downloadctx.update.message.text;
       let userId = downloadctx.update.message.from.id;
       const private = await isPrivate(url);
+      console.log(url);
+      console.log("private :", private);
       if (private)
         return downloadctx.reply(
           "there's some problem\nmake sure the account is not private"
