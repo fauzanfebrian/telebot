@@ -9,18 +9,12 @@ module.exports.Download = async (url, userId) => {
   result.url_list.forEach((url, index) => {
     const jpgPattern = new RegExp(/.jpg/gi);
     const isJpg = jpgPattern.test(url);
-    let path;
-    if (isJpg) {
-      path = `./results/insta/${userId}${index}.jpg`;
-      https.get(url, (response) => {
-        response.pipe(fs.createWriteStream(path));
-      });
-    } else if (isJpg === false) {
-      path = `./results/insta/${userId}${index}.mp4`;
-      https.get(url, (response) => {
-        response.pipe(fs.createWriteStream(path));
-      });
-    }
+    const path = isJpg
+      ? `./results/insta/${userId}${index}.jpg`
+      : `./results/insta/${userId}${index}.mp4`;
+    https.get(url, (response) => {
+      response.pipe(fs.createWriteStream(path));
+    });
     filePath.push({ path, type: isJpg ? "Image" : "Vidio" });
   });
   return filePath;
