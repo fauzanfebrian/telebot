@@ -8,6 +8,7 @@ const isPrivate = (url) => {
     axios
       .get(url)
       .then((result) => {
+        console.log(result.request._redirectable);
         resolve(
           result.request._redirectable._isRedirect == undefined ? false : true
         );
