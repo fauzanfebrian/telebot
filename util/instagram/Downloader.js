@@ -3,7 +3,13 @@ const https = require("https"); // or 'https' for https:// URLs
 const fs = require("fs");
 
 module.exports.Download = async (url, userId) => {
-  let result = await instagramGetUrl(url),
+  let result = await instagramGetUrl(url)
+      .then((value) => {
+        return value;
+      })
+      .catch(() => {
+        return { err: true };
+      }),
     filePath = await [];
   if (result.err) return { err: true };
   result.url_list.forEach((url, index) => {
