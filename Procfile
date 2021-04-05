@@ -1,2 +1,2 @@
 worker node index.js
-web: vendor/bin/telefz-bot web/
+web: vendor/bin/heroku-php-apache2 web/
