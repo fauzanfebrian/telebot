@@ -1,2 +1,2 @@
 worker node index.js
-web: web/
+web: vendor/bin/heroku-php-apache2 web/
