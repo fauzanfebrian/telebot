@@ -18,7 +18,8 @@ module.exports.Download = async (url, userId) => {
       .catch(() => {
         err: true;
       });
-    if (urls.err || urls.code == "error") return { err: true };
+    if (urls.err || urls.code == "error" || !urls.images_url[0])
+      return { err: true };
     else {
       let i = 0;
       result = [];
